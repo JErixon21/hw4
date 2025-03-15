@@ -1,22 +1,19 @@
 class PlacesController < ApplicationController
-
-  def index
-    @places = Place.all
-  end
+  # ... other actions ...
 
   def show
-    @place = Place.find_by({ "id" => params["id"] })
-    @entries = Entry.where({ "place_id" => @place["id"] })
+    @user = User.find_by({ "id" => session["user_id"] })
+    if @user != nil
+      @place = Place.find_by({ "id" => params["id"] })
+      if @place != nil
+        @entries = Entry.where({ "place_id" => @place["id"], "user_id" => @user["id"] }) # Only user's entries
+      else
+        redirect_to "/places"
+      end
+    else
+      redirect_to "/login"
+    end
   end
 
-  def new
-  end
-
-  def create
-    @place = Place.new
-    @place["name"] = params["name"]
-    @place.save
-    redirect_to "/places"
-  end
-
+  # ... other actions ...
 end
