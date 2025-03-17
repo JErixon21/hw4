@@ -9,6 +9,9 @@
           <h3 class="card-title"><%= entry["title"] %></h3>
           <h4 class="card-subtitle mb-2 text-muted"><%= entry["occurred_on"] %></h4>
           <p class="card-text"><%= entry["description"] %></p>
+          <% if entry.uploaded_image.attached? %>
+            <img src="<%= url_for(entry.uploaded_image) %>" class="card-img-bottom" style="max-width: 100%;">
+          <% end %>
         </div>
       </div>
     </div>
